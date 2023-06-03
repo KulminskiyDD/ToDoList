@@ -7,16 +7,21 @@ const todoSlice = createSlice({
   },
   reducers: {
     addToDo(state, action) {
-      console.log(state);
-      console.log(action);
       state.todos.push({
         id: new Date().toISOString(),
         text: action.payload.text,
         completed: false,
       });
     },
-    removeToDo(state, action) {},
-    toggleToDoComplete(state, action) {},
+    removeToDo(state, action) {
+      state.todos = state.todos.filter((todo) => todo.id !== action.payload.id);
+    },
+    toggleToDoComplete(state, action) {
+      const toggleToDo = state.todos.find(
+        (todo) => todo.id === action.payload.id
+      );
+      toggleToDo.completed = !toggleToDo.completed;
+    },
   },
 });
 
